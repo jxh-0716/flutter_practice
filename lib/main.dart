@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'pages/Echo.dart';
+import 'pages/TipRoute.dart';
+import 'pages/buttonTest.dart';
+import 'pages/imageIconTest.dart';
+import 'pages/newRoute.dart';
+import 'pages/switchAndCheckBox.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -31,7 +38,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        "buttonTest": (context) => ButtonTest(),
+        "imageIconTest": (context) => ImageIconTest(),
+        "switchAndCheckBox": (context) => SwitchAndCheckBox(),
+      },
+      home: const MyHomePage(title: 'Flutter Dem'),
     );
   }
 }
@@ -111,6 +123,48 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Echo(
+              text: 'nihao',
+              backgroundColor: Colors.red,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewRoute()),
+                );
+              },
+              child: const Text('Open new route'),
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  var result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return TipRoute(
+                        text: "我是提示xxxx",
+                      );
+                    }),
+                  );
+                  print("路由返回值: $result");
+                },
+                child: const Text("打开提示页")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "buttonTest");
+                },
+                child: const Text('Button Test')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "imageIconTest");
+                },
+                child: const Text('ImageIcon Test')),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "switchAndCheckBox");
+              },
+              child: const Text('SwitchAndCheckBox'),
             ),
           ],
         ),
